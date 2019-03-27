@@ -121,45 +121,84 @@ router.post("/login", (req, res) => {
 // @route POST api/users/enroll
 // @desc Enroll a user in a selected product
 // @access Public
-//router.put("/enroll",  passport.authenticate("jwt", { session: false }), (req, res) => {
-//
 router.post("/enroll", (req, res) => {
 
+  // Find user by id
+  console.log("Test enroll from 1 users.js");
 
-  // Find user date
-  const userData =  req.body.userData;
+  const id =  req.body.userData.user.id;
   const productType = req.body.productType;
 
-  console.log("Test enroll from 1 users.js");
-  //console.log(req.body.user.name);
+  console.log("id: " + id);
+  console.log("productType: " + productType);
 
-  console.log("Product Type: " + productType);
-  const { errors, isValid } = validateEnroll(userData, productType);
+  User.findOne({  _id: id }).then(user => {
+    // if (!user) {
+    //   return res.status(404).json({ usernotfound: "User not found" });
+    // }
+    console.log("FOUND USER!");
+    console.log(user);
+    //console.log(req.body.user.name);
 
-  // Check validation before proceeding
-  if (!isValid) {
-    console.log("Test enroll from 2 users.js INVALID")
-    return res.status(400).json(errors);
-  }
+    console.log("Product Type: " + productType);
 
-  // Find user
-  console.log("TEST:");
-  console.log(req.body.userData.user);
+    // Validate that user can enroll in selected product
+    const { errors, isValid, account } = validateEnroll(user, productType);
+    if (!isValid) {
+      console.log("test enroll INVALID")
+      return res.status(400).json(errors);
+    }
 
-  console.log("BEFORE CREATING account:");
-  var account = {
-    name: productType,
-    balance: 500,
-    date : Date.now(),
-    isActive: true
-  };
+    console.log(account);
 
-  console.log(account);
 
+    console.log("BEFORE FIND ONE AND UPDATE:");
+    User.findOneAndUpdate({_id: id}, {$push:{products:account}, $inc:{balance: -Math.abs(account.balance)}}, function(err, success) {
+
+      console.log("Test enroll from 3 users.js VALID")
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(success);
+      }
+
+      //res.send('Done');
+      console.log("Test enroll from 4 users.js VALID")
+      res.json({
+        success: true
+      });
+
+      console.log("Test enroll from 5 users.js VALID")
+      // // if you want update all settings object
+      // item.settings = req.body;
+      // // if something on settings field, item.settings.field1 = req.body.field1
+      // item.save(function(err) {
+      //   if (err)
+      //     res.send(err);
+      //
+      //   res.json({ message: 'Your item updated!' });
+      // });
+    });
+  });
+});
+
+
+router.post("/addBalance", (req, res) => {
+
+  // Get user data and addBalance amount
+  const userData =  req.body.userData;
+  var addBalance = req.body.addBalance;
+  console.log(req.body);
+  console.log("Test addBalance from 1 users.js " + addBalance);
+
+  var totalBalance = +userData.user.balance + +addBalance;
+  console.log("previous balance" + userData.user.balance);
+  console.log("adding new" + addBalance);
+  console.log("total Balance " + userData.user.balance + addBalance);
   console.log("BEFORE FIND ONE AND UPDATE:");
-  User.findOneAndUpdate({_id: req.body.userData.user.id}, {$push:{products:account}}, function(err, success) {
+  User.findOneAndUpdate({_id: userData.user.id}, {$inc:{balance: totalBalance}}, function(err, success) {
 
-    console.log("Test enroll from 3 users.js VALID")
+    console.log("Test addBalance 2 users.js VALID")
     if(err){
       console.log(err);
     }
@@ -168,23 +207,46 @@ router.post("/enroll", (req, res) => {
     }
 
     //res.send('Done');
-    console.log("Test enroll from 4 users.js VALID")
-    res.json({
-      success: true
-    });
-
-    console.log("Test enroll from 5 users.js VALID")
-    // // if you want update all settings object
-    // item.settings = req.body;
-    // // if something on settings field, item.settings.field1 = req.body.field1
-    // item.save(function(err) {
-    //   if (err)
-    //     res.send(err);
-    //
-    //   res.json({ message: 'Your item updated!' });
+    // res.json({
+    //   success: true
     // });
 
+
   });
+  res.json({
+    success: true
+  });
+});
+
+
+
+
+router.get("/getBalance/:userID", (req, res) => {
+
+
+  console.log("Test getBalance 1 users.js");
+  //const userData =  req;
+  // console.log(req);
+  // console.log(res);
+  const userID =  req.params.userID;
+
+  console.log(userID)
+  return User.findById({_id: userID}).then(function(balance){
+
+      console.log(" INSIDE FIND BY ID " + balance);
+      // return balance when resolved
+      res.send(balance);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+
+
+  console.log("Test getBalance 2 users.js");
+
+
+
 });
 
 module.exports = router;

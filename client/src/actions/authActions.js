@@ -2,7 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING , ENROLL} from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING , ENROLL, ADD_BALANCE, GET_BALANCE} from "./types";
 
 
 // Register User
@@ -54,12 +54,7 @@ export const setCurrentUser = decoded => {
   };
 };
 
-// User loading
-export const setUserLoading = () => {
-  return {
-    type: USER_LOADING
-  };
-};
+
 
 // Log user out
 export const logoutUser = () => dispatch => {
@@ -97,6 +92,69 @@ export const enroll =  (userData, productType) => dispatch =>{
 
 
 
+// Add Balance
+export const addBalance =  (userData, addBalance) => dispatch => {
+    console.log("Test add balance from 1 authActions.js " + addBalance);
+    axios
+        .post("/api/users/addBalance", {userData, addBalance})
+        .then(res => {
+            console.log("Test addBalance from 2 authActions.js");
+            console.log(res);
+            dispatch(setAddingBalance());
+            console.log("Test addBalance from  3 authActions.js");
+        })
+        //.catch(err => console.log(err));
+        .catch(err =>{
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        });
+};
+
+
+export const getBalance =  (userData, userID) => async (dispatch) => {
+    console.log("Test get balance from 1 authActions.js ");
+    console.log(userData);
+    console.log(userID);
+    await axios
+        .get("/api/users/getBalance/" + userID)
+        .then(res => {
+
+            console.log("Test get balance from 2 authActions.js");
+            console.log(res.data.balance);
+            //this.setState({ ["balance"]: res.data.balance});
+            //this.displayMessage("Congratulations");
+            //this.props.history.push("/dashboard/");
+            dispatch(setGettingBalance(res.data.balance));
+            // const promises = res.data(item => {
+            //
+            //     const balance= item.balance
+            // });
+            console.log("Test get balance from 3 authActions.js");
+
+            return res.data.balance;
+        })
+    //.catch(err => console.log(err));
+    // .catch(err =>
+    //     dispatch({
+    //         type: GET_ERRORS,
+    //         payload: err.response.data
+    //     })
+    // );
+};
+
+
+
+
+
+// User loading
+export const setUserLoading = () => {
+    return {
+        type: USER_LOADING
+    };
+};
+
 // User loading
 export const setUserEnrolling = () => {
     return {
@@ -105,6 +163,20 @@ export const setUserEnrolling = () => {
 };
 
 
+// adding balance
+export const setAddingBalance = () => {
+    return {
+        type: ADD_BALANCE
+    };
+};
 
+
+// getting balance
+export const setGettingBalance = (balance) => {
+    return {
+        type: GET_BALANCE,
+        balance: balance
+    };
+};
 
 
