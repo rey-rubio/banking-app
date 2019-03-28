@@ -3,6 +3,7 @@ export const USER_LOADING = "USER_LOADING";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const ENROLL = "ENROLL";
 export const ADD_BALANCE = "ADD_BALANCE";
+export const ADD_DOCUMENT = "ADD_DOCUMENT";
 export const GET_BALANCE = "GET_BALANCE";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_USER_DATA = "GET_USER_DATA";

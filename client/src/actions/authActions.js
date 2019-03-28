@@ -2,7 +2,8 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import {GET_ERRORS, SET_CURRENT_USER, USER_LOADING, ENROLL, ADD_BALANCE, GET_BALANCE, GET_PRODUCTS, GET_USER_DATA} from "./types";
+import {GET_ERRORS, SET_CURRENT_USER, USER_LOADING, ENROLL, ADD_BALANCE,
+    GET_BALANCE, GET_PRODUCTS, GET_USER_DATA, ADD_DOCUMENT} from "./types";
 
 
 // Register User
@@ -188,18 +189,19 @@ export const getUserData =  (userData, userID) => async (dispatch) => {
             console.log("Test getUserData from 2 authActions.js");
             console.log(res.data.balance);
             console.log(res.data.products);
+            console.log(res.data.documents);
             //this.setState({ ["balance"]: res.data.balance});
             //this.displayMessage("Congratulations");
             //this.props.history.push("/dashboard/");
 
-            dispatch(setGettingUserData(res.data.balance, res.data.products));
+            dispatch(setGettingUserData(res.data.balance, res.data.products, res.data.documents));
             // const promises = res.data(item => {
             //
             //     const balance= item.balance
             // });
             console.log("Test getUserData from 3 authActions.js");
 
-            return (res.data.balance, res.data.products);
+            return (res.data.balance, res.data.products, res.data.documents);
         })
     //.catch(err => console.log(err));
     // .catch(err =>
@@ -209,6 +211,30 @@ export const getUserData =  (userData, userID) => async (dispatch) => {
     //     })
     // );
 };
+
+
+// Add Document
+export const addDocument =  (userData, documentName) => dispatch => {
+    console.log("Test addDocument from 1 authActions.js " + documentName);
+    axios
+        .post("/api/users/addDocument", {userData, documentName})
+        .then(res => {
+            console.log("Test addDocument from 2 authActions.js");
+            console.log(res);
+            dispatch(setAddingDocument());
+            console.log("Test addDocument from  3 authActions.js");
+        })
+        //.catch(err => console.log(err));
+        .catch(err =>{
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        });
+};
+
+
+
 
 
 // User loading
@@ -233,6 +259,14 @@ export const setAddingBalance = () => {
     };
 };
 
+// adding balance
+export const setAddingDocument = () => {
+    return {
+        type: ADD_DOCUMENT
+    };
+};
+
+
 
 // getting balance
 export const setGettingBalance = (balance) => {
@@ -251,11 +285,12 @@ export const setGettingProducts = (products) => {
 };
 
 // getting balance
-export const setGettingUserData = (balance, products) => {
+export const setGettingUserData = (balance, products, documents) => {
     return {
         type: GET_USER_DATA,
         balance: balance,
-        products: products
+        products: products,
+        documents: documents
     };
 };
 

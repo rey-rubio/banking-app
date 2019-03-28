@@ -1,4 +1,4 @@
-import {SET_CURRENT_USER, USER_LOADING, ENROLL, ADD_BALANCE, GET_BALANCE, GET_PRODUCTS, GET_USER_DATA} from "../actions/types";
+import {SET_CURRENT_USER, USER_LOADING, ENROLL, ADD_BALANCE, GET_BALANCE, GET_PRODUCTS, GET_USER_DATA, ADD_DOCUMENT} from "../actions/types";
 
 const isEmpty = require("is-empty");
 
@@ -8,6 +8,7 @@ const initialState = {
     loading: false,
     enrolling: false,
     addingBalance: false,
+    addingDocument: false,
     gettingBalance: false,
     gettingProducts: false,
     gettingUserData: false
@@ -44,6 +45,12 @@ export default function (state = initialState, action) {
                 ...state,
                 addingBalance: true
             };
+        case ADD_DOCUMENT:
+            console.log("Test addBalance from authReducer.js");
+            return {
+                ...state,
+                addingDocument: true
+            };
         case GET_BALANCE:
             console.log("Test getBalance from authReducer.js");
             return {
@@ -64,7 +71,8 @@ export default function (state = initialState, action) {
                 ...state,
                 gettingUserData: true,
                 balance: action.balance,
-                products: action.products
+                products: action.products,
+                documents: action.documents
             };
         default:
             return state;

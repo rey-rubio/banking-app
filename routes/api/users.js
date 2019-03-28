@@ -4,12 +4,13 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
-const types = require("../../models/products/types");
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const validateEnroll = require("../../validation/enroll");
+const validateDocument = require("../../validation/document");
+
 
 // Load User model
 const User = require("../../models/User");
@@ -220,9 +221,41 @@ router.post("/addBalance", (req, res) => {
 
 
 
+router.post("/addDocument", (req, res) => {
+
+  // Get user data and addBalance amount
+  const userData =  req.body.userData;
+  const newDocumentName = req.body.documentName;
+  console.log("Test addDocument from 1 users.js " + newDocumentName);
+
+
+
+  const { errors, isValid, document } = validateDocument(newDocumentName);
+
+  if (!isValid) {
+    console.log("test addDocument INVALID")
+    return res.status(400).json(errors);
+  }
+  console.log("BEFORE FIND ONE AND UPDATE:");
+  User.findOneAndUpdate({_id: userData.user.id}, {$push:{documents: document}}, function(err, success) {
+
+    console.log("Test addDocument 2 users.js VALID")
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log(success);
+    }
+
+  });
+  res.json({
+    success: true
+  });
+});
+
+
 
 router.get("/getBalance/:userID", (req, res) => {
-
 
   console.log("Test getBalance 1 users.js");
   //const userData =  req;
@@ -287,15 +320,17 @@ router.get("/getUserData/:userID", (req, res) => {
   // console.log(res);
   const userID =  req.params.userID;
 
-  console.log(userID)
-  return User.findById({_id: userID}).then(function(balance, products){
+  console.log(userID);
+  return User.findById({_id: userID}).then(function(balance, products, documents){
 
     console.log(" INSIDE FIND BY ID ");
-    console.log(balance)
-    console.log(products)
+    console.log(balance);
+    console.log(products);
+    console.log(documents);
     // return balance and products when resolved
     res.send(balance);
     res.send(products);
+    res.send(documents);
   })
       .catch(function (error) {
         // handle error

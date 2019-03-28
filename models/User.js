@@ -23,17 +23,18 @@ const UserSchema = new Schema({
         type: Number,
         default: 0
     },
-    employment_history: {
-        type: Array,
-        default: {
-            employer_name: "",
-            start_date: Date.now,
-            end_date: Date.now,
-            salary: 80000
-
-        }
-
-    },
+    documents: [{
+        id: Schema.Types.ObjectId,
+        name: String,
+        date : Date,
+        // type: Array,
+        // default: {
+        //     employer_name: "",
+        //     start_date: Date.now,
+        //     end_date: Date.now,
+        //     salary: 80000
+        // }
+    }],
     products: [{
             id: Schema.Types.ObjectId,
             accountNumber: String,

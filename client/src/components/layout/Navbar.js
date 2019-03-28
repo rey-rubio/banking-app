@@ -14,7 +14,7 @@ class Navbar extends Component {
               }}
               className="col s5 brand-logo center white-text"
             >
-              <i className="material-icons">code</i>
+              <i className="material-icons">card_travel</i>
               PACE Bank
             </Link>
           </div>
