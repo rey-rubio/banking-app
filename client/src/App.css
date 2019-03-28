@@ -21,7 +21,19 @@
     /*background-color: #FFD333;*/
 /*}*/
 
+
 /* Float four columns side by side */
+
+.enroll-button{
+
+    /*width: 100%;*/
+    /*borderRadius: 5px;*/
+    /*letterSpacing: 1.5px;*/
+    /*marginTop: 1rem;*/
+
+}
+
+
 .column {
     float: left;
     width: 50%;
@@ -38,9 +50,9 @@
     /*clear: both;*/
 /*}*/
 
-/* Style the counter cards */
+/* Style the cards */
 .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5); /* this adds the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
     padding: 10px;
     text-align: left;
     background-color: #ddf3ff;

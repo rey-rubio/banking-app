@@ -2,7 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING , ENROLL, ADD_BALANCE, GET_BALANCE} from "./types";
+import {GET_ERRORS, SET_CURRENT_USER, USER_LOADING, ENROLL, ADD_BALANCE, GET_BALANCE, GET_PRODUCTS, GET_USER_DATA} from "./types";
 
 
 // Register User
@@ -145,7 +145,70 @@ export const getBalance =  (userData, userID) => async (dispatch) => {
 };
 
 
+export const getProducts =  (userData, userID) => async (dispatch) => {
+    console.log("Test getProducts from 1 authActions.js ");
+    console.log(userData);
+    console.log(userID);
+    await axios
+        .get("/api/users/getProducts/" + userID)
+        .then(res => {
 
+            console.log("Test getProducts from 2 authActions.js");
+            console.log(res.data.products);
+            //this.setState({ ["balance"]: res.data.balance});
+            //this.displayMessage("Congratulations");
+            //this.props.history.push("/dashboard/");
+            dispatch(setGettingProducts(res.data.products));
+            // const promises = res.data(item => {
+            //
+            //     const balance= item.balance
+            // });
+            console.log("Test get balance from 3 authActions.js");
+
+            return res.data.products;
+        })
+    //.catch(err => console.log(err));
+    // .catch(err =>
+    //     dispatch({
+    //         type: GET_ERRORS,
+    //         payload: err.response.data
+    //     })
+    // );
+};
+
+
+export const getUserData =  (userData, userID) => async (dispatch) => {
+    console.log("Test getProducts from 1 authActions.js ");
+    console.log(userData);
+    console.log(userID);
+    await axios
+        .get("/api/users/getUserData/" + userID)
+        .then(res => {
+
+            console.log("Test getUserData from 2 authActions.js");
+            console.log(res.data.balance);
+            console.log(res.data.products);
+            //this.setState({ ["balance"]: res.data.balance});
+            //this.displayMessage("Congratulations");
+            //this.props.history.push("/dashboard/");
+
+            dispatch(setGettingUserData(res.data.balance, res.data.products));
+            // const promises = res.data(item => {
+            //
+            //     const balance= item.balance
+            // });
+            console.log("Test getUserData from 3 authActions.js");
+
+            return (res.data.balance, res.data.products);
+        })
+    //.catch(err => console.log(err));
+    // .catch(err =>
+    //     dispatch({
+    //         type: GET_ERRORS,
+    //         payload: err.response.data
+    //     })
+    // );
+};
 
 
 // User loading
@@ -175,8 +238,24 @@ export const setAddingBalance = () => {
 export const setGettingBalance = (balance) => {
     return {
         type: GET_BALANCE,
-        balance: balance
+        balance: balance,
     };
 };
 
+// getting balance
+export const setGettingProducts = (products) => {
+    return {
+        type: GET_PRODUCTS,
+        products: products,
+    };
+};
+
+// getting balance
+export const setGettingUserData = (balance, products) => {
+    return {
+        type: GET_USER_DATA,
+        balance: balance,
+        products: products
+    };
+};
 

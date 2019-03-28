@@ -233,14 +233,14 @@ router.get("/getBalance/:userID", (req, res) => {
   console.log(userID)
   return User.findById({_id: userID}).then(function(balance){
 
-      console.log(" INSIDE FIND BY ID " + balance);
-      // return balance when resolved
-      res.send(balance);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
+    console.log(" INSIDE FIND BY ID " + balance);
+    // return balance when resolved
+    res.send(balance);
+  })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
 
 
   console.log("Test getBalance 2 users.js");
@@ -248,5 +248,64 @@ router.get("/getBalance/:userID", (req, res) => {
 
 
 });
+
+
+router.get("/getProducts/:userID", (req, res) => {
+
+
+  console.log("Test getProducts 1 users.js");
+  //const userData =  req;
+  // console.log(req);
+  // console.log(res);
+  const userID =  req.params.userID;
+
+  console.log(userID)
+  return User.findById({_id: userID}).then(function(products){
+
+    console.log(" INSIDE FIND BY ID ");
+    console.log(products)
+    // return balance when resolved
+    res.send(products);
+  })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+
+
+  console.log("Test getProducts 2 users.js");
+});
+
+
+
+router.get("/getUserData/:userID", (req, res) => {
+
+
+  console.log("Test getUserData 1 users.js");
+  //const userData =  req;
+  // console.log(req);
+  // console.log(res);
+  const userID =  req.params.userID;
+
+  console.log(userID)
+  return User.findById({_id: userID}).then(function(balance, products){
+
+    console.log(" INSIDE FIND BY ID ");
+    console.log(balance)
+    console.log(products)
+    // return balance and products when resolved
+    res.send(balance);
+    res.send(products);
+  })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+
+
+  console.log("Test getUserData 2 users.js");
+});
+
+
 
 module.exports = router;
