@@ -225,19 +225,22 @@ router.post("/addDocument", (req, res) => {
 
   // Get user data and addBalance amount
   const userData =  req.body.userData;
-  const newDocumentName = req.body.documentName;
-  console.log("Test addDocument from 1 users.js " + newDocumentName);
+  const document = req.body.document;
+  console.log("Test addDocument from 1 users.js");
+  console.log(document);
 
-
-
-  const { errors, isValid, document } = validateDocument(newDocumentName);
+  const { errors, isValid, newDocument } = validateDocument(document);
 
   if (!isValid) {
     console.log("test addDocument INVALID")
     return res.status(400).json(errors);
   }
+
+  console.log("Test addDocument from 1.2 users.js");
+  console.log(newDocument);
+
   console.log("BEFORE FIND ONE AND UPDATE:");
-  User.findOneAndUpdate({_id: userData.user.id}, {$push:{documents: document}}, function(err, success) {
+  User.findOneAndUpdate({_id: userData.user.id}, {$push:{documents: newDocument}}, function(err, success) {
 
     console.log("Test addDocument 2 users.js VALID")
     if(err){

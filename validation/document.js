@@ -2,10 +2,10 @@ const Validator = require("validator");
 const isEmpty = require("is-empty");
 
 
-const documentTypes = require("../models/Documents");
+const DOCUMENT_TYPES = require("../models/Documents");
 
 
-module.exports = function validateDocument(documentName) {
+module.exports = function validateDocument(document) {
     let errors = {};
 
     // Convert empty fields to an empty string so we can use validator functions
@@ -17,53 +17,57 @@ module.exports = function validateDocument(documentName) {
     // Find user by email
     console.log("Test inside validateDocument");
 
-    console.log(documentName);
+    console.log(document);
 
-    let document = {}
-    documentName = documentName.toUpperCase().trim();
+    let newDocument = {};
+    const documentType = document.docType.toUpperCase().trim();
 
-    console.log(documentName);
+    switch(documentType){
 
-    switch(documentName){
-
-        case(documentTypes.BIRTH_CERTIFICATE):
-            document = {
-                name: documentTypes.BIRTH_CERTIFICATE,
+        case(DOCUMENT_TYPES.BIRTH_CERTIFICATE):
+            newDocument = {
+                name: document.name,
+                docType: DOCUMENT_TYPES.BIRTH_CERTIFICATE,
                 date : Date.now()
             };
             break;
 
-        case(documentTypes.DRIVERS_LICENSE):
-            document = {
-                name: documentTypes.DRIVERS_LICENSE,
+        case(DOCUMENT_TYPES.DRIVERS_LICENSE):
+            newDocument = {
+                name: document.name,
+                docType: DOCUMENT_TYPES.DRIVERS_LICENSE,
                 date : Date.now()
             };
             break;
 
-        case(documentTypes.PASSPORT):
-            document = {
-                name: documentTypes.PASSPORT,
+        case(DOCUMENT_TYPES.PASSPORT):
+            newDocument = {
+                name: document.name,
+                docType: DOCUMENT_TYPES.PASSPORT,
                 date : Date.now()
             };
             break;
 
-        case(documentTypes.PROOF_OF_ADDRESS):
-            document = {
-                name: documentTypes.PROOF_OF_ADDRESS,
+        case(DOCUMENT_TYPES.PROOF_OF_ADDRESS):
+            newDocument = {
+                name: document.name,
+                docType: DOCUMENT_TYPES.PROOF_OF_ADDRESS,
                 date : Date.now()
             };
             break;
 
-        case(documentTypes.SOCIAL_SECURITY):
-            document = {
-                name: documentTypes.SOCIAL_SECURITY,
+        case(DOCUMENT_TYPES.SOCIAL_SECURITY):
+            newDocument = {
+                name: document.name,
+                docType: DOCUMENT_TYPES.SOCIAL_SECURITY,
                 date : Date.now()
             };
             break;
 
-        case(documentTypes.STATE_ID):
-            document = {
-                name: documentTypes.STATE_ID,
+        case(DOCUMENT_TYPES.STATE_ID):
+            newDocument = {
+                name: document.name,
+                docType: DOCUMENT_TYPES.STATE_ID,
                 date : Date.now()
             };
             break;
@@ -87,6 +91,6 @@ module.exports = function validateDocument(documentName) {
     return {
         errors,
         isValid: isEmpty(errors),
-        document
+        newDocument
     };
 };

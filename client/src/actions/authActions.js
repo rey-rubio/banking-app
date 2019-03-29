@@ -38,6 +38,8 @@ export const loginUser = userData => dispatch => {
 
       // Set current user
       dispatch(setCurrentUser(decoded));
+        //
+        // dispatch(setUserLoading());
     })
     .catch(err =>
       dispatch({
@@ -214,10 +216,11 @@ export const getUserData =  (userData, userID) => async (dispatch) => {
 
 
 // Add Document
-export const addDocument =  (userData, documentName) => dispatch => {
-    console.log("Test addDocument from 1 authActions.js " + documentName);
+export const addDocument =  (userData, document) => dispatch => {
+    console.log("Test addDocument from 1 authActions.js ");
+    console.log(document);
     axios
-        .post("/api/users/addDocument", {userData, documentName})
+        .post("/api/users/addDocument", {userData, document})
         .then(res => {
             console.log("Test addDocument from 2 authActions.js");
             console.log(res);

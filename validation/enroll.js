@@ -1,21 +1,13 @@
 const Validator = require("validator");
 const isEmpty = require("is-empty");
 
-const productTypes = require("../models/Products");
-
-const documentTypes = require("../models/Documents");
+const PRODUCT_TYPES = require("../models/Products");
+const DOCUMENT_TYPES = require("../models/Documents");
 
 module.exports = function validateEnroll(user, productType) {
 
     let errors = {};
 
-    // Convert empty fields to an empty string so we can use validator functions
-    // data.name = !isEmpty(data.name) ? data.name : "";
-    // data.email = !isEmpty(data.email) ? data.email : "";
-    // data.password = !isEmpty(data.password) ? data.password : "";
-    // data.password2 = !isEmpty(data.password2) ? data.password2 : "";
-
-    // Find user by email
     console.log("Test enroll inside validateEnroll");
     // console.log(user.balance);
     // console.log(user.documents);
@@ -37,16 +29,16 @@ module.exports = function validateEnroll(user, productType) {
 
     switch(productType){
 
-        case(productTypes.SAVINGS):
+        case(PRODUCT_TYPES.SAVINGS):
 
             // Check minimum balance
-            if(user.balance < productTypes.SAVINGS_MIN){
+            if(user.balance < PRODUCT_TYPES.SAVINGS_MIN){
 
-                errors.products_savings = "You need at least $" + productTypes.SAVINGS_MIN + " to enroll in a Savings account. ";
+                errors.products_savings = "You need at least $" + PRODUCT_TYPES.SAVINGS_MIN + " to enroll in a Savings account. ";
 
             }else{
                 //errors = {};
-                account.balance =  productTypes.SAVINGS_MIN;
+                account.balance =  PRODUCT_TYPES.SAVINGS_MIN;
 
             }
 
@@ -54,47 +46,47 @@ module.exports = function validateEnroll(user, productType) {
 
             break;
 
-        case(productTypes.CHECKING):
+        case(PRODUCT_TYPES.CHECKING):
 
             // Check minimum balance
-            if(user.balance < productTypes.CHECKING_MIN)
-                errors.products_checking = "You need at least $" + productTypes.CHECKING_MIN + " to enroll in a Checking account. ";
+            if(user.balance < PRODUCT_TYPES.CHECKING_MIN)
+                errors.products_checking = "You need at least $" + PRODUCT_TYPES.CHECKING_MIN + " to enroll in a Checking account. ";
             else{
                 //errors = {};
-                account.balance =  productTypes.CHECKING_MIN;
+                account.balance =  PRODUCT_TYPES.CHECKING_MIN;
 
             }
             break;
 
-        case(productTypes.MONEY_MARKET):
+        case(PRODUCT_TYPES.MONEY_MARKET):
 
             // Check minimum balance
-            if(user.balance < productTypes.MONEY_MARKET_MIN)
-                errors.products_money_market = "You need at least $" + productTypes.MONEY_MARKET_MIN + " to enroll in a Money Market account. ";
+            if(user.balance < PRODUCT_TYPES.MONEY_MARKET_MIN)
+                errors.products_money_market = "You need at least $" + PRODUCT_TYPES.MONEY_MARKET_MIN + " to enroll in a Money Market account. ";
             else{
                 //errors = {};
-                account.balance =  productTypes.MONEY_MARKET_MIN;
+                account.balance =  PRODUCT_TYPES.MONEY_MARKET_MIN;
 
             }
             break;
 
-        case(productTypes.CD):
+        case(PRODUCT_TYPES.CD):
             // Check minimum balance
-            if(user.balance < productTypes.CD_MIN)
-                errors.products_cd = "You need at least $" + productTypes.CD_MIN + " to enroll in a CD account. ";
+            if(user.balance < PRODUCT_TYPES.CD_MIN)
+                errors.products_cd = "You need at least $" + PRODUCT_TYPES.CD_MIN + " to enroll in a CD account. ";
             else{
-                account.balance =  productTypes.CD_MIN;
+                account.balance =  PRODUCT_TYPES.CD_MIN;
 
             }
             break;
 
-        case(productTypes.IRA_CD):
+        case(PRODUCT_TYPES.IRA_CD):
 
             // Check minimum balance
-            if(user.balance < productTypes.IRA_CD_MIN)
-                errors.products_ira_cd = "You need at least $" + productTypes.IRA_CD_MIN + " to enroll in an IRA CD account. ";
+            if(user.balance < PRODUCT_TYPES.IRA_CD_MIN)
+                errors.products_ira_cd = "You need at least $" + PRODUCT_TYPES.IRA_CD_MIN + " to enroll in an IRA CD account. ";
             else{
-                account.balance =  productTypes.IRA_CD_MIN;
+                account.balance =  PRODUCT_TYPES.IRA_CD_MIN;
 
             }
             break;
@@ -122,12 +114,12 @@ function hasDocuments(user) {
     //console.log(documents);
     let valid = [];
     let errors = "";
-    valid.push({name: documentTypes.BIRTH_CERTIFICATE, hasDocument: false},
-        {name: documentTypes.DRIVERS_LICENSE, hasDocument: false},
-        {name: documentTypes.PASSPORT, hasDocument: false},
-        {name: documentTypes.PROOF_OF_ADDRESS, hasDocument: false},
-        {name: documentTypes.SOCIAL_SECURITY, hasDocument: false},
-        {name: documentTypes.STATE_ID, hasDocument: false});
+    valid.push({name: DOCUMENT_TYPES.BIRTH_CERTIFICATE, hasDocument: false},
+        {name: DOCUMENT_TYPES.DRIVERS_LICENSE, hasDocument: false},
+        {name: DOCUMENT_TYPES.PASSPORT, hasDocument: false},
+        {name: DOCUMENT_TYPES.PROOF_OF_ADDRESS, hasDocument: false},
+        {name: DOCUMENT_TYPES.SOCIAL_SECURITY, hasDocument: false},
+        {name: DOCUMENT_TYPES.STATE_ID, hasDocument: false});
 
     console.log("inside hasDocuments 1.2");
     console.log(valid);
@@ -137,31 +129,31 @@ function hasDocuments(user) {
 
         console.log(user.documents[i]);
         switch (user.documents[i].name) {
-            case(documentTypes.BIRTH_CERTIFICATE):
+            case(DOCUMENT_TYPES.BIRTH_CERTIFICATE):
                 console.log("found birth certificate");
                 valid[0].hasDocument = true;
                 break;
-            case(documentTypes.DRIVERS_LICENSE):
+            case(DOCUMENT_TYPES.DRIVERS_LICENSE):
 
                 console.log("found drivers license");
                 valid[1].hasDocument = true;
                 break;
-            case(documentTypes.PASSPORT):
+            case(DOCUMENT_TYPES.PASSPORT):
 
                 console.log("found passport");
                 valid[2].hasDocument = true;
                 break;
-            case(documentTypes.PROOF_OF_ADDRESS):
+            case(DOCUMENT_TYPES.PROOF_OF_ADDRESS):
 
                 console.log("found proof of address");
                 valid[3].hasDocument = true;
                 break;
-            case(documentTypes.SOCIAL_SECURITY):
+            case(DOCUMENT_TYPES.SOCIAL_SECURITY):
 
                 console.log("found social security");
                 valid[4].hasDocument = true;
                 break;
-            case(documentTypes.STATE_ID):
+            case(DOCUMENT_TYPES.STATE_ID):
 
                 console.log("found state id");
                 valid[5].hasDocument = true;
@@ -179,13 +171,13 @@ function hasDocuments(user) {
     valid.forEach(doc => {
         console.log(doc);
         if(doc.hasDocument == false){
-            errors += doc.name + " ";
+            errors += doc.name + ", ";
         }
 
     });
 
     if(!isEmpty(errors))
-        errors = "Missing: " + errors;
+        errors = "Missing Documents: " + errors;
 
 
     console.log("inside hasDocuments 3");

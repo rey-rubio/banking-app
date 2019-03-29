@@ -26,30 +26,49 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 isAuthenticated: !isEmpty(action.payload),
-                user: action.payload
+                user: action.payload,
+                loading: true,
             };
         case USER_LOADING:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                enrolling: false,
+                addingBalance: false,
+                addingDocument: false,
+                gettingBalance: false,
+                gettingProducts: false,
+                gettingUserData: false,
             };
         case ENROLL:
             console.log("Test enroll from authReducer.js");
             return {
                 ...state,
-                enrolling: true
+                loading: false,
+                enrolling: true,
+                addingBalance: false,
+                addingDocument: false,
+                gettingBalance: false,
+                gettingProducts: false,
+                gettingUserData: false
             };
         case ADD_BALANCE:
             console.log("Test addBalance from authReducer.js");
             return {
                 ...state,
-                addingBalance: true
+                addingBalance: true,
             };
         case ADD_DOCUMENT:
             console.log("Test addBalance from authReducer.js");
             return {
                 ...state,
-                addingDocument: true
+                loading: false,
+                enrolling: false,
+                addingBalance: false,
+                addingDocument: true,
+                gettingBalance: false,
+                gettingProducts: false,
+                gettingUserData: false
             };
         case GET_BALANCE:
             console.log("Test getBalance from authReducer.js");
@@ -69,10 +88,15 @@ export default function (state = initialState, action) {
             console.log("Test GET_USER_DATA from authReducer.js");
             return {
                 ...state,
-                gettingUserData: true,
+
+                loading: false,
                 balance: action.balance,
                 products: action.products,
-                documents: action.documents
+                documents: action.documents,
+                enrolling: false,
+                gettingBalance: false,
+                gettingProducts: false,
+                gettingUserData: true
             };
         default:
             return state;

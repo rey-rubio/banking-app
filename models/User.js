@@ -26,6 +26,7 @@ const UserSchema = new Schema({
     documents: [{
         id: Schema.Types.ObjectId,
         name: String,
+        docType: String,
         date : Date,
         // type: Array,
         // default: {

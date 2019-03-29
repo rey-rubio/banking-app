@@ -1,67 +1,35 @@
-/*.card-wrapper {*/
-    /*width: 209px;*/
-    /*margin: .4%;*/
-    /*float: left;*/
-    /*background-color: #5cb85c;*/
-    /*color: white;*/
-    /*padding: 16px;*/
-    /*border-radius: 1px;*/
-/*}*/
 
-/*.color--red {*/
-    /*background-color: #d9534f;*/
-/*}*/
-/*.color--blue{*/
-    /*background-color: #5bc0de;*/
-/*}*/
-/*.color--darkBlue{*/
-    /*background-color:  #428bca;*/
-/*}*/
-/*.color--yellow {*/
-    /*background-color: #FFD333;*/
-/*}*/
-
-
-/* Float four columns side by side */
-
-.right-justified{
+.right-justified {
 
     text-align: right;
 }
 
 .label {
-    font-size: 20px;
+    font-size: 14px;
+    font-weight: bold;
     display: inline-block;
-    width: 140px;
+    width: 125px;
     text-align: right;
-}​
-.enroll-button{
-
-    /*width: 100%;*/
-    /*borderRadius: 5px;*/
-    /*letterSpacing: 1.5px;*/
-    /*marginTop: 1rem;*/
-
+    margin-right: 10px;
 }
 
+​
+.row {
+    margin: 0 10px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
 
 .column {
-    float: left;
     width: 50%;
+
+    float: left;
     padding: 0 15px;
 }
-
-/* Remove extra left and right margins, due to padding in columns */
-/*.row {margin: 0 -5px;}*/
-
-/* Clear floats after the columns */
-/*.row:after {*/
-    /*content: "";*/
-    /*display: table;*/
-    /*clear: both;*/
-/*}*/
-
-/* Style the cards */
 
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
@@ -73,57 +41,50 @@
     margin-bottom: 2.5rem;
 
 }
+
 .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.75);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.75);
 }
 
-.card-title{
+.card-title {
     font-weight: bold;
 
     text-align: center;
 }
 
-/* Responsive columns - one column layout (vertical) on small screens */
-/*@media screen and (max-width: 600px) {*/
-    /*.column {*/
-        /*width: 100%;*/
-        /*display: block;*/
-        /*margin-bottom: 20px;*/
-    /*}*/
-/*}*/
-
-
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
-    position: center; /* Stay in place */
+    position: fixed; /* Stay in place */
     z-index: 2; /* Sit on top */
     left: 50%;
     top: 50%;
-    /*width: 50%; !* Full width *!*/
-    /*height: 50%; !* Full height *!*/
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.3); /* Black w/ opacity */
+    width: 100%; /* Full width */
+    height: 150%; /* Full height */
+    /*overflow: auto; !* Enable scroll if needed *!*/
+    /*background-color: rgb(0,0,0); !* Fallback color *!*/
+    /*background-color: rgba(0,0,0,0.3); !* Black w/ opacity *!*/
+    background-color: deepskyblue;
     transform: translate(-50%, -50%);
 }
 
 /* Modal Content/Box */
 .modal-content {
 
-    font-color: #fefefe;
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
+    font-color: blue;
+    background-color: white;
+    margin: 12% auto; /* 15% from the top and centered */
+    padding: 5px;
     border: 2px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 100%; /* Could be more or less, depending on screen size */
+    height: 15%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */
 .close {
-    color: #aaa;
+    color: grey;
     float: right;
-    font-size: 28px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -135,19 +96,22 @@
 }
 
 
-
 /* The container must be positioned relative: */
-.custom-select {
+.document-type-select {
+    width: 300px;
+    float: left;
     position: relative;
     font-family: Arial;
+    margin-left: 135px;
+    margin-top: 15px;
 }
 
-.custom-select select {
+.document-type-select select {
     display: none; /*hide original SELECT element: */
 }
 
 .select-selected {
-    background-color: DodgerBlue;
+    background-color: lightskyblue;
 }
 
 /* Style the arrow inside the select element: */
@@ -169,7 +133,7 @@
 }
 
 /* style the items (options), including the selected item: */
-.select-items div,.select-selected {
+.select-items div, .select-selected {
     color: #ffffff;
     padding: 8px 16px;
     border: 1px solid transparent;
@@ -195,3 +159,209 @@
 .select-items div:hover, .same-as-selected {
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+
+/*section {*/
+/*position: absolute;*/
+/*left: 50%;*/
+/*top: 50%;*/
+/*transform: translate(-50%, -50%);*/
+/*}*/
+/*body {*/
+/*height: 100%;*/
+/*margin: 0;*/
+/*padding: 0;*/
+/*width: 100%;*/
+/*}*/
+
+/*.modal {*/
+/*background: dodgerblue;*/
+/*height: 1px;*/
+/*overflow: hidden;*/
+/*position: fixed;*/
+/*top: 50%;*/
+/*left: 50%;*/
+/*transform: translate(-50%, -50%);*/
+/*transition: width 0.5s ease 0.5s,*/
+/*height 0.5s ease;*/
+/*width: 0;*/
+/*}*/
+
+/*.content {*/
+/*color: transparent;*/
+/*font-family: 'Consolas', arial, sans-serif;*/
+/*font-size: 2em;*/
+/*position: absolute;*/
+/*top: 50%;*/
+/*text-align: center;*/
+/*transform: translate3d(0,-50%,0);*/
+/*transition: color 0.5s ease;*/
+/*width: 100%;*/
+/*}*/
+
+/*modal-label {*/
+/*color: dodgerblue;*/
+/*cursor: pointer;*/
+/*font-family: 'Consolas', arial, sans-serif;*/
+/*font-size: 2em;*/
+/*position: fixed;*/
+/*left: 50%;*/
+/*top: 50%;*/
+/*text-transform: uppercase;*/
+/*transform: translate(-50%, -50%);*/
+/*transition: color 0.5s ease 0.5s;*/
+/*}*/
+
+/*modal-input {*/
+/*cursor: pointer;*/
+/*height: 0;*/
+/*opacity: 0;*/
+/*width: 0;*/
+/*}*/
+
+/*modal-input:focus {*/
+/*cursor: pointer;*/
+/*height: 0;*/
+/*opacity: 0;*/
+/*width: 0;*/
+/*outline: none;*/
+/*}*/
+
+
+/*modal-input:checked {*/
+/*height: 40px;*/
+/*opacity: 1;*/
+/*position: fixed;*/
+/*right: 20px;*/
+/*top: 20px;*/
+/*z-index: 1;*/
+/*-webkit-appearance: none;*/
+/*width: 40px;*/
+/*}*/
+
+
+/*modal-input:checked:after.input:checked:before {*/
+
+/*border-top: 1px solid #FFF;*/
+/*content: '';*/
+/*display: block;*/
+/*position: absolute;*/
+/*top: 50%;*/
+/*transform: rotate(45deg);*/
+/*width: 100%;*/
+
+/*}*/
+
+/*modal-input:checked + modal-label {*/
+/*color: #FFF;*/
+/*transition: color 0.5s ease*/
+/*}*/
+
+/*modal-input:checked ~ .modal  {*/
+/*height: 100%;*/
+/*width: 100%;*/
+/*transition: width 0.5s ease,*/
+/*height 0.5s ease 0.5s;*/
+/*}*/
+/*modal-input:checked ~ .modal.content*/
+/*{*/
+
+/*color: #FFF;*/
+/*transition: color 0.5s ease 0.5s;*/
+/*}*/
+
+/*html,*/
+/*body {*/
+/*height: 100%;*/
+/*margin: 0;*/
+/*padding: 0;*/
+/*width: 100%;*/
+/*}*/
+
+/*.modal {*/
+/*background: dodgerblue;*/
+/*height: 1px;*/
+/*overflow: hidden;*/
+/*position: fixed;*/
+/*top: 50%;*/
+/*left: 50%;*/
+/*transform: translate(-50%, -50%);*/
+/*transition: width 0.5s ease 0.5s,*/
+/*height 0.5s ease;*/
+/*width: 0;*/
+/*}*/
+
+/*.content {*/
+/*color: transparent;*/
+/*font-family: 'Consolas', arial, sans-serif;*/
+/*font-size: 2em;*/
+/*position: absolute;*/
+/*top: 50%;*/
+/*text-align: center;*/
+/*transform: translate3d(0,-50%,0);*/
+/*transition: color 0.5s ease;*/
+/*width: 100%;*/
+/*}*/
+
+/*label {*/
+/*color: dodgerblue;*/
+/*cursor: pointer;*/
+/*font-family: 'Consolas', arial, sans-serif;*/
+/*font-size: 2em;*/
+/*position: fixed;*/
+/*left: 50%;*/
+/*top: 50%;*/
+/*text-transform: uppercase;*/
+/*transform: translate(-50%, -50%);*/
+/*transition: color 0.5s ease 0.5s;*/
+/*}*/
+
+/*input {*/
+/*cursor: pointer;*/
+/*height: 0;*/
+/*opacity: 0;*/
+/*width: 0;*/
+/*&: focus {*/
+/*outline: none;*/
+/*}*/
+/*}*/
+
+/*input:checked {*/
+/*height: 40px;*/
+/*opacity: 1;*/
+/*position: fixed;*/
+/*right: 20px;*/
+/*top: 20px;*/
+/*z-index: 1;*/
+/*-webkit-appearance: none;*/
+/*width: 40px;*/
+/*&: :after,*/
+/*&:before {*/
+/*border-top: 1px solid #FFF;*/
+/*content: '';*/
+/*display: block;*/
+/*position: absolute;*/
+/*top: 50%;*/
+/*transform: rotate(45deg);*/
+/*width: 100%;*/
+/*}*/
+
+/*&::after {*/
+/*transform: rotate(-45deg);*/
+/*}*/
+/*}*/
+
+/*input:checked + label {*/
+/*color: #FFF;*/
+/*transition: color 0.5s ease,;*/
+/*}*/
+
+/*input:checked ~ .modal {*/
+/*height: 100%;*/
+/*width: 100%;*/
+/*transition: width 0.5s ease,*/
+/*height 0.5s ease 0.5s;*/
+/*.content {*/
+/*color: #FFF;*/
+/*transition: color 0.5s ease 0.5s;*/
+/*}*/
