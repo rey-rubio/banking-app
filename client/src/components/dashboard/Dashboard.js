@@ -4,8 +4,6 @@ import {connect} from "react-redux";
 import {logoutUser} from "../../actions/authActions";
 import {enroll} from "../../actions/authActions";
 import {addBalance} from "../../actions/authActions";
-import {getBalance} from "../../actions/authActions";
-import {getProducts} from "../../actions/authActions";
 import {getUserData} from "../../actions/authActions";
 import {addDocument} from "../../actions/authActions";
 
@@ -16,6 +14,8 @@ class Dashboard extends Component {
     constructor() {
 
         super();
+
+
         this.state = {
             errors: {},
             addBalance: 0,
@@ -28,22 +28,12 @@ class Dashboard extends Component {
 
     // Get the <span> element that closes the modal
     componentDidMount() {
-        //const {user} = this.props.auth;
         populateComboBox();
-        // this.updateBalance();
-        //
-        // this.updateProducts();
-        // this.setState({balance: user.balance});
-        // this.setState({products: user.products});
-        //const span = document.getElementsByClassName("close")[0];
-        //const modal = document.getElementById('myModal')
 
-        const refreshUserDataButton = document.getElementById("REFRESH");
+        const refreshUserDataButton = document.getElementById("refreshButton");
         refreshUserDataButton.click();
-        // const refreshProductsButton = document.getElementById("REFRESH_PRODUCTS");
-
-        // refreshProductsButton.click();
     }
+
 
     onAddBalanceChange = e => {
         this.setState({[e.currentTarget.id]: e.currentTarget.value});
@@ -92,31 +82,12 @@ class Dashboard extends Component {
         console.log("updateNewDocument 2");
     }
 
-    // onDocumentComboBoxChange() {
-    //     console.log("onDocumentComboBoxChange");
-    //     const documentComboBox = document.getElementById("document-combo-box");
-    //
-    //     if(documentComboBox.selectedIndex !== 0){
-    //         this.setState({["newDocument"]: {
-    //                 "docType" : documentComboBox.options[documentComboBox.selectedIndex].text}});
-    //     }
-    //     else{
-    //         this.setState({["newDocument"]: {
-    //                 "docType" : ""}});
-    //     }
-    //
-    //     //console.log("onAddDocumentChange: " + e.currentTarget.id + " name: " + e.currentTarget.value + " type: " + documentComboBox.options[documentComboBox.selectedIndex].text)
-    //     console.log(this.state.newDocument);
-    // };
-
     componentWillReceiveProps(nextProps) {
+
         console.log("componentWillReceiveProps 1")
         console.log(nextProps);
-
-        if (nextProps.auth.loading === true && nextProps.auth.gettingUserData === true) {
-
+        if (nextProps.auth.loading === true) {
             this.displayMessage("Welcome!");
-
         }
 
 
@@ -127,18 +98,16 @@ class Dashboard extends Component {
         }
 
         if (nextProps.auth.balance !== this.state.balance) {
-            console.log("WHAAAAAAAAAAAAAAAAAAAT BALANCE BALANCE BALANCE");
+            console.log("BALANCE BALANCE BALANCE");
             console.log(nextProps.auth.balance);
 
             this.setState({
                 balance: nextProps.auth.balance
             });
-
-            //this.displayMessage("Balance updated!");
-        }
+       }
 
         if (nextProps.auth.products.length !== this.state.products.length) {
-            console.log("WHAAAAAAAAAAAAAAAAAAAT PRODUCTS PRODUCTS PRODUCTS");
+            console.log("PRODUCTS PRODUCTS PRODUCTS");
             console.log(nextProps.auth.products);
 
 
@@ -149,10 +118,11 @@ class Dashboard extends Component {
 
             var productsTable = "";
             for (var i = 0; i < nextProps.auth.products.length; i++) {
+                var date = new Date(nextProps.auth.products[i].date);
                 productsTable += '<tr>' +
                     '<td>' + nextProps.auth.products[i].name + '</td>' +
                     '<td>' + nextProps.auth.products[i].balance + '</td>' +
-                    '<td>' + nextProps.auth.products[i].date + '</th>' +
+                    '<td>' + date.toDateString() + " " + date.toTimeString() + '</th>' +
                     '</tr>'
             }
 
@@ -166,35 +136,30 @@ class Dashboard extends Component {
         if (nextProps.auth.documents) {
             //const documents = nextProps.auth.documents;
 
-            console.log("WHAAAAAAAAAAAAAAAAAAAT DOCUMENTS DOCUMENTS DOCUMENTS");
+            console.log("DOCUMENTS DOCUMENTS DOCUMENTS");
             console.log(nextProps.auth.documents);
 
             this.setState({
                 documents: nextProps.auth.documents
             });
 
-
             var documentsTable = "";
             for (i = 0; i < nextProps.auth.documents.length; i++) {
+                var date = new Date(nextProps.auth.documents[i].date);
                 documentsTable += '<tr>' +
                     '<td>' + nextProps.auth.documents[i].name + '</td>' +
                     '<td>' + nextProps.auth.documents[i].docType + '</td>' +
-                    '<td>' + nextProps.auth.documents[i].date + '</th>' +
+                    '<td>' + date.toDateString() + " " + date.toTimeString() + '</th>' +
                     '</tr>'
             }
 
-
             document.getElementById("documentsTable").innerHTML = documentsTable;
 
-            if (nextProps.auth.gettingUserData === true && nextProps.auth.loading === false && nextProps.auth.enrolling === true) {
-
+            if (nextProps.auth.enrolling === true) {
                 this.displayMessage("Congratulations, you have been successfully enrolled!");
-
             }
-
         }
         console.log("componentWillReceiveProps 2")
-
     }
 
     onLogoutClick = e => {
@@ -220,14 +185,10 @@ class Dashboard extends Component {
 
     onAddBalanceClick(e) {
         e.preventDefault();
-
         console.log("Test add balance from 1 Dashboard.js");
-
         console.log(e.currentTarget.id);
         this.props.addBalance(this.props.auth, this.state.addBalance);
-
         console.log("Test add balance from 2 Dashboard.js");
-
         document.getElementById("addBalance").value = 0;
 
     }
@@ -238,14 +199,8 @@ class Dashboard extends Component {
         this.updateNewDocument();
         console.log(e.currentTarget.id);
         console.log(this.state.newDocument);
-        // const newDocumentInput = document.getElementById("newDocument");
-        // //documentComboBox.dispatchEvent(new Event("click"));
-        // newDocumentInput.dispatchEvent(new Event("change"));
-
         console.log("Test onAddDocumentClick from 2 Dashboard.js");
-
         console.log(this.state.newDocument);
-
         this.props.addDocument(this.props.auth, this.state.newDocument);
         console.log("Test onAddDocumentClick from 3 Dashboard.js");
 
@@ -257,13 +212,10 @@ class Dashboard extends Component {
         e.preventDefault();
 
         console.log("Test onSelectDocumentClick from 1 Dashboard.js");
-
         console.log(e.currentTarget.id);
-
         console.log("Test onSelectDocumentClick from 2 Dashboard.js");
         var fileChooser = document.createElement('input');
         fileChooser.type = 'file';
-
         fileChooser.onchange = e => {
             var file = e.currentTarget.files[0];
             console.log(file.name);
@@ -271,13 +223,9 @@ class Dashboard extends Component {
             document.getElementById("newDocument").value = file.name;
 
         }
-
         fileChooser.click();
-
         console.log("Test onSelectDocumentClick from 3 Dashboard.js");
-
     }
-
 
     displayMessage(message) {
         const modal = document.getElementById('myModal');
@@ -285,90 +233,14 @@ class Dashboard extends Component {
         modal.style.display = "block";
     }
 
-    // async getBalance(){
-    //
-    //     const {user} = this.props.auth;
-    //     console.log("Inside getBalance1: " + user.balance);
-    //
-    //     const newBalance = await this.props.getBalance(this.props.auth, user.id);
-    //
-    //
-    //
-    //     console.log("Inside getBalance2: " + newBalance);
-    //     return newBalance;
-    //
-    //
-    //
-    //     // var newBalance = await data.then((balance) => {
-    //     //     console.log("Inside updateBalance2 " + balance);
-    //     //     document.getElementById("currentBalance").innerText = balance;
-    //     //     return balance;
-    //     // });
-    //
-    //
-    // }
-
-    // (async function(){
-    //         let books = await u pdateBalance();
-    //         console.log(books);
-    //     })();
 
     updateUserData(e) {
         e.preventDefault();
         console.log("Inside updateUserData 1");
         const {user} = this.props.auth;
-
         this.props.getUserData(this.props.auth, user.id);
-
         console.log("Inside updateUserData 2");
-
-
     }
-
-    updateBalance(e) {
-        e.preventDefault();
-        console.log("Inside updateBalance1: ");
-        const {user} = this.props.auth;
-        // // var newBalance = await this.getBalance();
-        // // console.log("Inside updateBalance2: " + newBalance);
-        // // document.getElementById("currentBalance").innerText = newBalance;
-        // //
-        // // this.forceUpdate();
-        //
-        // this.setState({ ["balance"]: this.getBalance() });
-        // console.log("Inside updateBalance2: ");
-        this.props.getBalance(this.props.auth, user.id);
-
-        // getBalance(this.props.auth, user.id);
-
-        const refreshProductsButton = document.getElementById("REFRESH_PRODUCTS");
-
-        refreshProductsButton.click();
-        //this.props.history.push("/dashboard/");
-        console.log("Inside updateBalance2: ");
-    }
-
-    updateProducts(e) {
-
-        e.preventDefault();
-        console.log("Inside updateProducts 1 : ");
-        const {user} = this.props.auth;
-        // // var newBalance = await this.getBalance();
-        // // console.log("Inside updateBalance2: " + newBalance);
-        // // document.getElementById("currentBalance").innerText = newBalance;
-        // //
-        // // this.forceUpdate();
-        //
-        // this.setState({ ["balance"]: this.getBalance() });
-        // console.log("Inside updateBalance2: ");
-        this.props.getProducts(this.props.auth, user.id);
-
-        // getBalance(this.props.auth, user.id);
-
-        //this.props.history.push("/dashboard/");
-        console.log("Inside updateProducts 2: ");
-    }
-
 
     render() {
         const {user} = this.props.auth;
@@ -395,7 +267,7 @@ class Dashboard extends Component {
                                 </p>
 
                                 <button
-                                    id="REFRESH"
+                                    id="refreshButton"
                                     style={{
 
                                         height: "45px",
@@ -412,57 +284,143 @@ class Dashboard extends Component {
                                 </button>
                             </h4>
                         </div>
-                        <div>
-                            <div className="card" style={{
-                                width: "flex",
-                                // height: "200px",
-                                padding: "10px",
-                                borderRadius: "3px",
-                                letterSpacing: "1.5px",
-                                marginTop: "1rem",
-                            }}>
 
-                                <h5 className="card-title">Your current balance: $<b
-                                    id="currentBalance">{this.state.balance} </b></h5>
+                        <div className="row">
+                            <div className="column" style={{"width": "40%"}}>
+                                <div className="card" style={{
+                                    width: "flex",
+                                    // height: "200px",
+                                    padding: "10px",
+                                    borderRadius: "3px",
+                                    letterSpacing: "1.5px",
+                                    marginTop: "1rem",
+                                }}>
 
-                                <div>
+                                    <h5 className="card-title">My balance: $<b
+                                        id="currentBalance">{this.state.balance.toFixed(2)} </b></h5>
 
-                                    <label className="label" htmlFor="addBalance">Add Balance: ($)</label>
+                                    <center>
+                                        <div>
 
-                                    <input className="right-justified"
-                                           onChange={this.onAddBalanceChange}
-                                           value={this.state.addBalance}
-                                           error={errors.addBalance}
-                                           id="addBalance"
-                                           type="Number"
-                                           min="0.01"
-                                           step="0.01"
-                                           style={{
-                                               height: "40px",
+                                            <label className="label" htmlFor="addBalance">Add Balance: ($)</label>
 
-                                               width: "200px",
-                                               borderRadius: "3px",
-                                               letterSpacing: "1.5px",
-                                               marginTop: "1rem",
+                                            <input className="right-justified"
+                                                   onChange={this.onAddBalanceChange}
+                                                   value={this.state.addBalance}
+                                                   error={errors.addBalance}
+                                                   id="addBalance"
+                                                   type="Number"
+                                                   step="0.01"
+                                                   style={{
+                                                       height: "40px",
+                                                       background: "whitesmoke",
+                                                       width: "125px",
+                                                       borderRadius: "10px",
+                                                       letterSpacing: "1.5px",
 
-                                           }}
-                                    />
+                                                   }}
+                                            />
 
-                                    <button
-                                        id="ADD_BALANCE"
-                                        style={{
-                                            width: "10%",
-                                            height: "40px",
-                                            borderRadius: "3px",
-                                            letterSpacing: "1.5px",
-                                            marginLeft: "2rem",
-                                        }}
-                                        onClick={this.onAddBalanceClick.bind(this)}
-                                        className="btn btn-small waves-effect waves-light hoverable green accent-3"
-                                    >
-                                        <b>Add</b>
-                                        <i className="material-icons">add_circle_outline</i>
-                                    </button>
+                                            <button
+                                                id="addBalanceButton"
+                                                style={{
+                                                    width: "100px",
+                                                    height: "40px",
+                                                    borderRadius: "3px",
+                                                    letterSpacing: "1.5px",
+                                                    marginLeft: "1rem",
+
+                                                    marginBottom: "0.5rem"
+                                                }}
+                                                onClick={this.onAddBalanceClick.bind(this)}
+                                                className="btn btn-small waves-effect waves-light hoverable green accent-3"
+                                            >
+                                                <b>Add</b>
+                                                <i className="material-icons">add_circle_outline</i>
+                                            </button>
+                                        </div>
+                                    </center>
+
+                                </div>
+                            </div>
+                            <div className="column" style={{"width": "60%"}}>
+                                <div className="card" style={{
+                                    width: "flex",
+                                    padding: "10px",
+                                    borderRadius: "3px",
+                                    letterSpacing: "1.5px",
+                                    marginTop: "1rem",
+                                }}>
+
+                                    <h5 className="card-title">Upload Document: </h5>
+                                    <center>
+                                        <div>
+                                            <label className="label" htmlFor="newDocument">File name:</label>
+                                            <input
+                                                onChange={this.onAddDocumentChange}
+                                                error={errors.addDocument}
+                                                id="newDocument"
+                                                type="String"
+                                                style={{
+                                                    width: "250px",
+
+                                                    height: "30px",
+                                                    borderRadius: "3px",
+                                                    letterSpacing: "1.5px",
+                                                    marginTop: "1rem",
+                                                }}
+                                            />
+                                            <button
+                                                id="selectDocumentButton"
+                                                style={{
+                                                    width: "110px",
+                                                    height: "35px",
+                                                    borderRadius: "3px",
+                                                    letterSpacing: "1.5px",
+                                                    marginLeft: "1rem",
+                                                    marginBottom: "0.5rem"
+                                                }}
+                                                onClick={this.onSelectDocumentClick.bind(this)}
+                                                className="btn btn-small waves-effect waves-light hoverable grey accent-3"
+                                            >
+                                                <b>Attach</b>
+
+                                                <i className="material-icons">attach_file</i>
+                                            </button>
+
+                                            <div className="document-type-select">
+
+                                                <select id="document-combo-box">
+                                                    <option value="0">Select document type:</option>
+                                                    <option value="1">BIRTH_CERTIFICATE</option>
+                                                    <option value="2">DRIVERS_LICENSE</option>
+                                                    <option value="3">PASSPORT</option>
+                                                    <option value="4">PROOF_OF_ADDRESS</option>
+                                                    <option value="5">SOCIAL_SECURITY</option>
+                                                    <option value="6">STATE_ID</option>
+                                                </select>
+                                            </div>
+                                            <button
+                                                id="uploadDocumentButton"
+                                                style={{
+                                                    width: "115px",
+                                                    height: "35px",
+                                                    borderRadius: "3px",
+                                                    letterSpacing: "1.5px",
+                                                    marginLeft: "1rem",
+                                                    marginBottom: "0.5rem"
+                                                }}
+                                                onClick={this.onAddDocumentClick.bind(this)}
+                                                className="btn btn-small waves-effect waves-light hoverable green accent-3"
+                                            >
+                                                <b>Upload</b>
+
+                                                <i className="material-icons">file_upload</i>
+                                            </button>
+
+
+                                        </div>
+                                    </center>
                                 </div>
 
                             </div>
@@ -478,85 +436,19 @@ class Dashboard extends Component {
                         }}>
 
 
-                            <h5 className="card-title">Your documents: </h5>
+                            <h5 className="card-title">My documents</h5>
 
                             <div>
-                                <label className="label" htmlFor="newDocument">File name:</label>
-                                <input
-                                    onChange={this.onAddDocumentChange}
-                                    error={errors.addDocument}
-                                    id="newDocument"
-                                    type="String"
-                                    style={{
-                                        width: "400px",
-
-                                        height: "30px",
-                                        borderRadius: "3px",
-                                        letterSpacing: "1.5px",
-                                        marginTop: "1rem",
-                                    }}
-                                />
-                                <button
-                                    id="SELECT_DOCUMENT"
-                                    style={{
-                                        width: "13%",
-                                        height: "35px",
-                                        borderRadius: "3px",
-                                        letterSpacing: "1.5px",
-                                        marginLeft: "1rem",
-                                        marginBottom: "0.5rem"
-                                    }}
-                                    onClick={this.onSelectDocumentClick.bind(this)}
-                                    className="btn btn-small waves-effect waves-light hoverable grey accent-3"
-                                >
-                                    <b>Attach</b>
-
-                                    <i className="material-icons">attach_file</i>
-                                </button>
-
-                                <button
-                                    id="UPLOAD_DOCUMENT"
-                                    style={{
-                                        width: "14%",
-                                        height: "35px",
-                                        borderRadius: "3px",
-                                        letterSpacing: "1.5px",
-
-                                        marginLeft: "2rem",
-
-                                        marginBottom: "0.5rem"
-                                    }}
-                                    onClick={this.onAddDocumentClick.bind(this)}
-                                    className="btn btn-small waves-effect waves-light hoverable green accent-3"
-                                >
-                                    <b>Upload</b>
-
-                                    <i className="material-icons">file_upload</i>
-                                </button>
-
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Document Type</th>
+                                        <th>Date</th>
+                                    </tr>
+                                    <tbody id="documentsTable">
+                                    </tbody>
+                                </table>
                             </div>
-                            <div className="document-type-select">
-                                <select id="document-combo-box">
-                                    <option value="0">Select document type:</option>
-                                    <option value="1">BIRTH_CERTIFICATE</option>
-                                    <option value="2">DRIVERS_LICENSE</option>
-                                    <option value="3">PASSPORT</option>
-                                    <option value="4">PROOF_OF_ADDRESS</option>
-                                    <option value="5">SOCIAL_SECURITY</option>
-                                    <option value="6">STATE_ID</option>
-                                </select>
-                            </div>
-                            <table>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Document Type</th>
-                                    <th>Date</th>
-                                </tr>
-                                <tbody id="documentsTable">
-                                </tbody>
-                            </table>
-
-
                         </div>
 
                         <div>
@@ -569,22 +461,7 @@ class Dashboard extends Component {
                                 letterSpacing: "1.5px",
                                 marginTop: "1rem",
                             }}>
-                                <h5 className="card-title">Your current accounts: </h5>
-                                {/*<center>*/}
-                                {/*<button*/}
-                                {/*id="REFRESH_PRODUCTS"*/}
-                                {/*style={{*/}
-                                {/*width: "12%",*/}
-                                {/*borderRadius: "3px",*/}
-                                {/*}}*/}
-                                {/*onClick={this.updateProducts.bind(this)}*/}
-                                {/*//onClick = {this.updateProducts()}*/}
-                                {/*//onClick= {this.props.getBalance(this.props.auth, user.id)}*/}
-                                {/*className="btn btn-small waves-effect waves-light hoverable green accent-3"*/}
-                                {/*>*/}
-                                {/*<b>Refresh</b>*/}
-                                {/*</button>*/}
-                                {/*</center>*/}
+                                <h5 className="card-title">My accounts</h5>
                                 <div>
                                     <table>
                                         <tr>
@@ -620,8 +497,8 @@ class Dashboard extends Component {
                             })}
                         />
                         <span className="red-text">
-                        {errors.documents}
-                                        </span>
+                           <b> {errors.documents}</b>
+                        </span>
 
 
                         <div class="row">
@@ -634,6 +511,9 @@ class Dashboard extends Component {
                                         your money grow.A simple savings account with low fees and an automatic savings
                                         program to help
                                         your money grow.</p>
+                                    <h6>
+                                        Minimum Deposit Required: $250
+                                    </h6>
                                     <div className="input-field col s12">
                                         <text
                                             error={errors.products_savings || errors.documents}
@@ -642,7 +522,7 @@ class Dashboard extends Component {
                                             })}
                                         />
                                         <span className="red-text">
-                                            {errors.products_savings}
+                                            <b> {errors.products_savings} </b>
                                         </span>
                                     </div>
 
@@ -663,6 +543,9 @@ class Dashboard extends Component {
                                         your bills and make most of your financial transactions. Also called a
                                         transactional account, it's the account that you will use to pay
                                         your bills and make most of your financial transactions</p>
+                                    <h6>
+                                        Minimum Deposit Required: $50
+                                    </h6>
                                     <div className="input-field col s12">
                                         <text
                                             error={errors.products_checking}
@@ -671,7 +554,7 @@ class Dashboard extends Component {
                                             })}
                                         />
                                         <span className="red-text">
-                                            {errors.products_checking}
+                                            <b> {errors.products_checking}</b>
                                         </span>
                                     </div>
                                     <button id="CHECKING"
@@ -686,11 +569,20 @@ class Dashboard extends Component {
                             <div class="column">
                                 <div class="card">
                                     <h5 className="card-title">Money Market</h5>
-                                    <p>A money market account is an interest-bearing account that typically pays a
+                                    <h6>A money market account is an interest-bearing account that typically pays a
                                         higher interest rate than a savings account and provides the account holder
-                                        with limited check-writing ability. A money market account thus offers the
-                                        account holder benefits typical of both savings and checking accounts.
-                                    </p>
+                                        with limited check-writing ability.
+
+
+                                    </h6>
+
+                                    <h6>
+                                        Enjoy the benefits of higher yield money market rates! Get started with a money
+                                        market account today!
+                                    </h6>
+                                    <h6>
+                                        Minimum Deposit Required: $50
+                                    </h6>
                                     <div className="input-field col s12">
                                         <text
                                             error={errors.products_money_market}
@@ -699,7 +591,7 @@ class Dashboard extends Component {
                                             })}
                                         />
                                         <span className="red-text">
-                                            {errors.products_money_market}
+                                            <b> {errors.products_money_market}</b>
                                         </span>
                                     </div>
                                     <button id="MONEY_MARKET"
@@ -714,12 +606,16 @@ class Dashboard extends Component {
                             <div className="column">
                                 <div className="card">
                                     <h5 className="card-title">CD</h5>
-                                    <p> A CD is an account that typically offers a higher interest rate than a savings
-                                        or checking account. However, your money is tied up in the CD for a
-                                        predetermined length of time, known as the CD’s term. If you withdraw money
-                                        before the end of the term, you will likely pay considerable penalties. A CD
-                                        term could be as short as three months or as long as 10 years. The longer the
-                                        term, the higher the interest rate usually is. </p>
+                                    <h6> A Certificate of Deposit (CD) is an account that typically offers a higher
+                                        interest rate than a savings
+                                        or checking account. </h6>
+
+                                    <h6>
+                                        Get started with a CD account today!
+                                    </h6>
+                                    <h6>
+                                        Minimum Deposit Required: $1000
+                                    </h6>
                                     <div className="input-field col s12">
                                         <text
                                             error={errors.products_cd}
@@ -728,7 +624,7 @@ class Dashboard extends Component {
                                             })}
                                         />
                                         <span className="red-text">
-                                            {errors.products_cd}
+                                            <b>{errors.products_cd}</b>
                                         </span>
                                     </div>
                                     <button id="CD"
@@ -743,9 +639,13 @@ class Dashboard extends Component {
                             <div class="column">
                                 <div class="card">
                                     <h5 className="card-title">IRA CD</h5>
-                                    <p> An individual retirement account (IRA) let’s you save for retirement without
-                                        going through your employer. There are different kinds of IRAs and the best for
-                                        you depends on your individual situation and goals. </p>
+                                    <p> An individual retirement account (IRA) CD let’s you save for retirement without
+                                        going through your employer.</p>
+                                    <h6>
+                                        Get started with a IRA CD account today!
+                                    </h6>
+                                    <p><i> Minimum Deposit Required: $2500</i>
+                                    </p>
                                     <div className="input-field col s12">
                                         <text
                                             error={errors.products_ira_cd}
@@ -754,7 +654,7 @@ class Dashboard extends Component {
                                             })}
                                         />
                                         <span className="red-text">
-                                            {errors.products_ira_cd}
+                                            <b>{errors.products_ira_cd}</b>
                                         </span>
                                     </div>
                                     <button id="IRA_CD"
@@ -782,13 +682,9 @@ class Dashboard extends Component {
                     </div>
                 </div>
             </div>
-
-
         )
             ;
     }
-
-
 }
 
 function populateComboBox() {
@@ -844,50 +740,30 @@ function populateComboBox() {
                 documentComboBox.options[documentComboBox.selectedIndex].text);
             window.newDocument = documentComboBox.options[documentComboBox.selectedIndex].text;
 
-            // if(documentComboBox.selectedIndex !== 0){
-            //     this.setState({["newDocument"]: {
-            //             "docType" : documentComboBox.options[documentComboBox.selectedIndex].text}});
-            // }
-            // else{
-            //     this.setState({["newDocument"]: {
-            //             "docType" : ""}});
-            // }
-            // var x, y, i, arrNo = [];
-            // x = document.getElementsByClassName("select-items");
-            // y = document.getElementsByClassName("select-selected");
-            // for (i = 0; i < y.length; i++) {
-            //     if (this === y[i]) {
-            //         arrNo.push(i)
-            //     } else {
-            //         y[i].classList.remove("select-arrow-active");
-            //     }
-            // }
-            // for (i = 0; i < x.length; i++) {
-            //     if (arrNo.indexOf(i)) {
-            //         x[i].classList.add("select-hide");
-            //     }
-            // }
             this.nextSibling.classList.toggle("select-hide");
             this.classList.toggle("select-arrow-active");
-            //super.onDocumentComboBoxChange(e);
-
-            // console.log("onDocumentComboBoxChange");
-            // const documentComboBox = document.getElementById("document-combo-box");
-            //
-            // if(documentComboBox.selectedIndex !== 0){
-            //     this.setState({["newDocument"]: {
-            //             "docType" : documentComboBox.options[documentComboBox.selectedIndex].text}});
-            // }
-            // else{
-            //     this.setState({["newDocument"]: {
-            //             "docType" : ""}});
-            // }
-
-            //console.log("onAddDocumentChange: " + e.currentTarget.id + " name: " + e.currentTarget.value + " type: " + documentComboBox.options[documentComboBox.selectedIndex].text)
-            //console.log(Dashboard.state.newDocument);
         });
     }
 }
+
+// function getDateTimeString(date) {
+//
+//     var month = date.getMonth().toString();
+//     var day = date.getDay();
+//     var year = date.getFullYear();
+//     var hours = date.getHours();
+//     var minutes = date.getMinutes();
+//     var seconds = date.getSeconds();
+//
+//     if (minutes < 10) {
+//         minutes = "0" + minutes;
+//     } else {
+//         minutes.toString();
+//     }
+//
+//     var dateTime = String.format("%s/%s/%s %s:%s:%s", month, day, year, hours, minutes, seconds);
+//     return dateTime;
+// }
 
 function closeAllSelect(elmnt) {
     /* A function that will close all select boxes in the document,
@@ -915,8 +791,6 @@ Dashboard.propTypes = {
     addBalance: PropTypes.func.isRequired,
     addDocument: PropTypes.func.isRequired,
     getUserData: PropTypes.func.isRequired,
-    getBalance: PropTypes.func.isRequired,
-    getProducts: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -932,16 +806,9 @@ const mapDispatchToProps = {
     enroll,
     addBalance,
     addDocument,
-    getUserData,
-    getBalance,
-    getProducts
+    getUserData
 }
 export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(Dashboard);
-
-// export default connect(
-// mapStateToProps,
-// {enroll}
-// )(Dashboard);

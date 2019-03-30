@@ -17,9 +17,15 @@ module.exports = function validateDocument(document) {
     // Find user by email
     console.log("Test inside validateDocument");
 
-    console.log(document);
-
     let newDocument = {};
+    console.log(document);
+    if(document == {}){
+        return {
+            errors,
+            isValid: isEmpty(errors),
+            newDocument
+        };
+    }
     const documentType = document.docType.toUpperCase().trim();
 
     switch(documentType){

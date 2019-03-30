@@ -2,78 +2,78 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import {GET_ERRORS, SET_CURRENT_USER, USER_LOADING, ENROLL, ADD_BALANCE,
-    GET_BALANCE, GET_PRODUCTS, GET_USER_DATA, ADD_DOCUMENT} from "./types";
+import {
+    GET_ERRORS, SET_CURRENT_USER, USER_LOADING, ENROLL, ADD_BALANCE,
+    GET_USER_DATA, ADD_DOCUMENT
+} from "./types";
 
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
-  axios
-    .post("/api/users/register", userData)
-    .then(res => history.push("/login"))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+    axios
+        .post("/api/users/register", userData)
+        .then(res => history.push("/login"))
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
 };
 
 // Login - get user token
 export const loginUser = userData => dispatch => {
 
     console.log("Test login from authActions.js");
-  axios
-    .post("/api/users/login", userData)
-    .then(res => {
-      // Save to localStorage
+    axios
+        .post("/api/users/login", userData)
+        .then(res => {
+            // Save to localStorage
 
-      // Set token to localStorage
-      const { token } = res.data;
-      localStorage.setItem("jwtToken", token);
-      // Set token to Auth header
-      setAuthToken(token);
-      // Decode token to get user data
-      const decoded = jwt_decode(token);
+            // Set token to localStorage
+            const {token} = res.data;
+            localStorage.setItem("jwtToken", token);
+            // Set token to Auth header
+            setAuthToken(token);
+            // Decode token to get user data
+            const decoded = jwt_decode(token);
 
-      // Set current user
-      dispatch(setCurrentUser(decoded));
-        //
-        // dispatch(setUserLoading());
-    })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+            // Set current user
+            dispatch(setCurrentUser(decoded));
+            //
+            // dispatch(setUserLoading());
+        })
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
 };
 
 // Set logged in user
 export const setCurrentUser = decoded => {
-  return {
-    type: SET_CURRENT_USER,
-    payload: decoded
-  };
+    return {
+        type: SET_CURRENT_USER,
+        payload: decoded
+    };
 };
-
 
 
 // Log user out
 export const logoutUser = () => dispatch => {
     console.log("Test logout from 1 authActions.js");
-  // Remove token from local storage
-  localStorage.removeItem("jwtToken");
-  // Remove auth header for future requests
-  setAuthToken(false);
-  // Set current user to empty object {} which will set isAuthenticated to false
-  dispatch(setCurrentUser({}));
+    // Remove token from local storage
+    localStorage.removeItem("jwtToken");
+    // Remove auth header for future requests
+    setAuthToken(false);
+    // Set current user to empty object {} which will set isAuthenticated to false
+    dispatch(setCurrentUser({}));
 };
 
 
-
 // Enroll for a product
-export const enroll =  (userData, productType) => dispatch =>{
+export const enroll = (userData, productType) => dispatch => {
     console.log("Test enroll from 1 authActions.js");
     console.log("Test enroll from 1 authActions.js " + productType);
     axios
@@ -94,9 +94,8 @@ export const enroll =  (userData, productType) => dispatch =>{
 };
 
 
-
 // Add Balance
-export const addBalance =  (userData, addBalance) => dispatch => {
+export const addBalance = (userData, addBalance) => dispatch => {
     console.log("Test add balance from 1 authActions.js " + addBalance);
     axios
         .post("/api/users/addBalance", {userData, addBalance})
@@ -107,7 +106,7 @@ export const addBalance =  (userData, addBalance) => dispatch => {
             console.log("Test addBalance from  3 authActions.js");
         })
         //.catch(err => console.log(err));
-        .catch(err =>{
+        .catch(err => {
             dispatch({
                 type: GET_ERRORS,
                 payload: err.response.data
@@ -115,72 +114,7 @@ export const addBalance =  (userData, addBalance) => dispatch => {
         });
 };
 
-
-export const getBalance =  (userData, userID) => async (dispatch) => {
-    console.log("Test get balance from 1 authActions.js ");
-    console.log(userData);
-    console.log(userID);
-    await axios
-        .get("/api/users/getBalance/" + userID)
-        .then(res => {
-
-            console.log("Test get balance from 2 authActions.js");
-            console.log(res.data.balance);
-            //this.setState({ ["balance"]: res.data.balance});
-            //this.displayMessage("Congratulations");
-            //this.props.history.push("/dashboard/");
-            dispatch(setGettingBalance(res.data.balance));
-            // const promises = res.data(item => {
-            //
-            //     const balance= item.balance
-            // });
-            console.log("Test get balance from 3 authActions.js");
-
-            return res.data.balance;
-        })
-    //.catch(err => console.log(err));
-    // .catch(err =>
-    //     dispatch({
-    //         type: GET_ERRORS,
-    //         payload: err.response.data
-    //     })
-    // );
-};
-
-
-export const getProducts =  (userData, userID) => async (dispatch) => {
-    console.log("Test getProducts from 1 authActions.js ");
-    console.log(userData);
-    console.log(userID);
-    await axios
-        .get("/api/users/getProducts/" + userID)
-        .then(res => {
-
-            console.log("Test getProducts from 2 authActions.js");
-            console.log(res.data.products);
-            //this.setState({ ["balance"]: res.data.balance});
-            //this.displayMessage("Congratulations");
-            //this.props.history.push("/dashboard/");
-            dispatch(setGettingProducts(res.data.products));
-            // const promises = res.data(item => {
-            //
-            //     const balance= item.balance
-            // });
-            console.log("Test get balance from 3 authActions.js");
-
-            return res.data.products;
-        })
-    //.catch(err => console.log(err));
-    // .catch(err =>
-    //     dispatch({
-    //         type: GET_ERRORS,
-    //         payload: err.response.data
-    //     })
-    // );
-};
-
-
-export const getUserData =  (userData, userID) => async (dispatch) => {
+export const getUserData = (userData, userID) => async (dispatch) => {
     console.log("Test getProducts from 1 authActions.js ");
     console.log(userData);
     console.log(userID);
@@ -205,18 +139,18 @@ export const getUserData =  (userData, userID) => async (dispatch) => {
 
             return (res.data.balance, res.data.products, res.data.documents);
         })
-    //.catch(err => console.log(err));
-    // .catch(err =>
-    //     dispatch({
-    //         type: GET_ERRORS,
-    //         payload: err.response.data
-    //     })
-    // );
+
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
 };
 
 
 // Add Document
-export const addDocument =  (userData, document) => dispatch => {
+export const addDocument = (userData, document) => dispatch => {
     console.log("Test addDocument from 1 authActions.js ");
     console.log(document);
     axios
@@ -226,18 +160,17 @@ export const addDocument =  (userData, document) => dispatch => {
             console.log(res);
             dispatch(setAddingDocument());
             console.log("Test addDocument from  3 authActions.js");
+            return;
         })
+
         //.catch(err => console.log(err));
-        .catch(err =>{
+        .catch(err => {
             dispatch({
                 type: GET_ERRORS,
                 payload: err.response.data
             })
         });
 };
-
-
-
 
 
 // User loading
@@ -269,23 +202,6 @@ export const setAddingDocument = () => {
     };
 };
 
-
-
-// getting balance
-export const setGettingBalance = (balance) => {
-    return {
-        type: GET_BALANCE,
-        balance: balance,
-    };
-};
-
-// getting balance
-export const setGettingProducts = (products) => {
-    return {
-        type: GET_PRODUCTS,
-        products: products,
-    };
-};
 
 // getting balance
 export const setGettingUserData = (balance, products, documents) => {

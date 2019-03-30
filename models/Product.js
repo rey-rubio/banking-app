@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
+const ProductSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -29,15 +29,13 @@ const UserSchema = new Schema({
         date : Date,
     }],
     products: [{
-            id: Schema.Types.ObjectId,
-            accountNumber: String,
-            name: String,
-            balance: Number,
-            date : Date,
-            isActive: Boolean
+        id: Schema.Types.ObjectId,
+        accountNumber: String,
+        name: String,
+        balance: Number,
+        date : Date,
+        isActive: Boolean
     }]
 });
 
-module.exports = User = mongoose.model("users", UserSchema);
-
-
+module.exports = Product = mongoose.model("products", ProductSchema);

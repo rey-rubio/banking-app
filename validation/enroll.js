@@ -128,7 +128,7 @@ function hasDocuments(user) {
     for(let i = 0; i < user.documents.length; i++) {
 
         console.log(user.documents[i]);
-        switch (user.documents[i].name) {
+        switch (user.documents[i].docType) {
             case(DOCUMENT_TYPES.BIRTH_CERTIFICATE):
                 console.log("found birth certificate");
                 valid[0].hasDocument = true;

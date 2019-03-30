@@ -1,4 +1,4 @@
-import {SET_CURRENT_USER, USER_LOADING, ENROLL, ADD_BALANCE, GET_BALANCE, GET_PRODUCTS, GET_USER_DATA, ADD_DOCUMENT} from "../actions/types";
+import {SET_CURRENT_USER, USER_LOADING, ENROLL, ADD_BALANCE, GET_USER_DATA, ADD_DOCUMENT} from "../actions/types";
 
 const isEmpty = require("is-empty");
 
@@ -9,8 +9,6 @@ const initialState = {
     enrolling: false,
     addingBalance: false,
     addingDocument: false,
-    gettingBalance: false,
-    gettingProducts: false,
     gettingUserData: false
 };
 
@@ -32,25 +30,13 @@ export default function (state = initialState, action) {
         case USER_LOADING:
             return {
                 ...state,
-                loading: true,
-                enrolling: false,
-                addingBalance: false,
-                addingDocument: false,
-                gettingBalance: false,
-                gettingProducts: false,
-                gettingUserData: false,
+                loading: true
             };
         case ENROLL:
             console.log("Test enroll from authReducer.js");
             return {
                 ...state,
-                loading: false,
                 enrolling: true,
-                addingBalance: false,
-                addingDocument: false,
-                gettingBalance: false,
-                gettingProducts: false,
-                gettingUserData: false
             };
         case ADD_BALANCE:
             console.log("Test addBalance from authReducer.js");
@@ -70,20 +56,7 @@ export default function (state = initialState, action) {
                 gettingProducts: false,
                 gettingUserData: false
             };
-        case GET_BALANCE:
-            console.log("Test getBalance from authReducer.js");
-            return {
-                ...state,
-                gettingBalance: true,
-                balance: action.balance
-            };
-        case GET_PRODUCTS:
-            console.log("Test GET_PRODUCTS from authReducer.js");
-            return {
-                ...state,
-                gettingProducts: true,
-                products: action.products
-            };
+
         case GET_USER_DATA:
             console.log("Test GET_USER_DATA from authReducer.js");
             return {
@@ -94,8 +67,6 @@ export default function (state = initialState, action) {
                 products: action.products,
                 documents: action.documents,
                 enrolling: false,
-                gettingBalance: false,
-                gettingProducts: false,
                 gettingUserData: true
             };
         default:

@@ -1,4 +1,6 @@
 
+
+
 .right-justified {
 
     text-align: right;
@@ -8,7 +10,6 @@
     font-size: 14px;
     font-weight: bold;
     display: inline-block;
-    width: 125px;
     text-align: right;
     margin-right: 10px;
 }
@@ -35,7 +36,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
     padding: 30px;
     text-align: left;
-    background-color: #ddf3ff;
+    background-color: white;
     display: flex;
     flex-direction: column;
     margin-bottom: 2.5rem;
@@ -98,12 +99,9 @@
 
 /* The container must be positioned relative: */
 .document-type-select {
-    width: 300px;
-    float: left;
+    width: 250px;
     position: relative;
     font-family: Arial;
-    margin-left: 135px;
-    margin-top: 15px;
 }
 
 .document-type-select select {
@@ -134,7 +132,7 @@
 
 /* style the items (options), including the selected item: */
 .select-items div, .select-selected {
-    color: #ffffff;
+    color: black;
     padding: 8px 16px;
     border: 1px solid transparent;
     border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
@@ -144,7 +142,7 @@
 /* Style items (options): */
 .select-items {
     position: absolute;
-    background-color: DodgerBlue;
+    background-color: lightblue;
     top: 100%;
     left: 0;
     right: 0;
@@ -160,208 +158,3 @@
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-
-/*section {*/
-/*position: absolute;*/
-/*left: 50%;*/
-/*top: 50%;*/
-/*transform: translate(-50%, -50%);*/
-/*}*/
-/*body {*/
-/*height: 100%;*/
-/*margin: 0;*/
-/*padding: 0;*/
-/*width: 100%;*/
-/*}*/
-
-/*.modal {*/
-/*background: dodgerblue;*/
-/*height: 1px;*/
-/*overflow: hidden;*/
-/*position: fixed;*/
-/*top: 50%;*/
-/*left: 50%;*/
-/*transform: translate(-50%, -50%);*/
-/*transition: width 0.5s ease 0.5s,*/
-/*height 0.5s ease;*/
-/*width: 0;*/
-/*}*/
-
-/*.content {*/
-/*color: transparent;*/
-/*font-family: 'Consolas', arial, sans-serif;*/
-/*font-size: 2em;*/
-/*position: absolute;*/
-/*top: 50%;*/
-/*text-align: center;*/
-/*transform: translate3d(0,-50%,0);*/
-/*transition: color 0.5s ease;*/
-/*width: 100%;*/
-/*}*/
-
-/*modal-label {*/
-/*color: dodgerblue;*/
-/*cursor: pointer;*/
-/*font-family: 'Consolas', arial, sans-serif;*/
-/*font-size: 2em;*/
-/*position: fixed;*/
-/*left: 50%;*/
-/*top: 50%;*/
-/*text-transform: uppercase;*/
-/*transform: translate(-50%, -50%);*/
-/*transition: color 0.5s ease 0.5s;*/
-/*}*/
-
-/*modal-input {*/
-/*cursor: pointer;*/
-/*height: 0;*/
-/*opacity: 0;*/
-/*width: 0;*/
-/*}*/
-
-/*modal-input:focus {*/
-/*cursor: pointer;*/
-/*height: 0;*/
-/*opacity: 0;*/
-/*width: 0;*/
-/*outline: none;*/
-/*}*/
-
-
-/*modal-input:checked {*/
-/*height: 40px;*/
-/*opacity: 1;*/
-/*position: fixed;*/
-/*right: 20px;*/
-/*top: 20px;*/
-/*z-index: 1;*/
-/*-webkit-appearance: none;*/
-/*width: 40px;*/
-/*}*/
-
-
-/*modal-input:checked:after.input:checked:before {*/
-
-/*border-top: 1px solid #FFF;*/
-/*content: '';*/
-/*display: block;*/
-/*position: absolute;*/
-/*top: 50%;*/
-/*transform: rotate(45deg);*/
-/*width: 100%;*/
-
-/*}*/
-
-/*modal-input:checked + modal-label {*/
-/*color: #FFF;*/
-/*transition: color 0.5s ease*/
-/*}*/
-
-/*modal-input:checked ~ .modal  {*/
-/*height: 100%;*/
-/*width: 100%;*/
-/*transition: width 0.5s ease,*/
-/*height 0.5s ease 0.5s;*/
-/*}*/
-/*modal-input:checked ~ .modal.content*/
-/*{*/
-
-/*color: #FFF;*/
-/*transition: color 0.5s ease 0.5s;*/
-/*}*/
-
-/*html,*/
-/*body {*/
-/*height: 100%;*/
-/*margin: 0;*/
-/*padding: 0;*/
-/*width: 100%;*/
-/*}*/
-
-/*.modal {*/
-/*background: dodgerblue;*/
-/*height: 1px;*/
-/*overflow: hidden;*/
-/*position: fixed;*/
-/*top: 50%;*/
-/*left: 50%;*/
-/*transform: translate(-50%, -50%);*/
-/*transition: width 0.5s ease 0.5s,*/
-/*height 0.5s ease;*/
-/*width: 0;*/
-/*}*/
-
-/*.content {*/
-/*color: transparent;*/
-/*font-family: 'Consolas', arial, sans-serif;*/
-/*font-size: 2em;*/
-/*position: absolute;*/
-/*top: 50%;*/
-/*text-align: center;*/
-/*transform: translate3d(0,-50%,0);*/
-/*transition: color 0.5s ease;*/
-/*width: 100%;*/
-/*}*/
-
-/*label {*/
-/*color: dodgerblue;*/
-/*cursor: pointer;*/
-/*font-family: 'Consolas', arial, sans-serif;*/
-/*font-size: 2em;*/
-/*position: fixed;*/
-/*left: 50%;*/
-/*top: 50%;*/
-/*text-transform: uppercase;*/
-/*transform: translate(-50%, -50%);*/
-/*transition: color 0.5s ease 0.5s;*/
-/*}*/
-
-/*input {*/
-/*cursor: pointer;*/
-/*height: 0;*/
-/*opacity: 0;*/
-/*width: 0;*/
-/*&: focus {*/
-/*outline: none;*/
-/*}*/
-/*}*/
-
-/*input:checked {*/
-/*height: 40px;*/
-/*opacity: 1;*/
-/*position: fixed;*/
-/*right: 20px;*/
-/*top: 20px;*/
-/*z-index: 1;*/
-/*-webkit-appearance: none;*/
-/*width: 40px;*/
-/*&: :after,*/
-/*&:before {*/
-/*border-top: 1px solid #FFF;*/
-/*content: '';*/
-/*display: block;*/
-/*position: absolute;*/
-/*top: 50%;*/
-/*transform: rotate(45deg);*/
-/*width: 100%;*/
-/*}*/
-
-/*&::after {*/
-/*transform: rotate(-45deg);*/
-/*}*/
-/*}*/
-
-/*input:checked + label {*/
-/*color: #FFF;*/
-/*transition: color 0.5s ease,;*/
-/*}*/
-
-/*input:checked ~ .modal {*/
-/*height: 100%;*/
-/*width: 100%;*/
-/*transition: width 0.5s ease,*/
-/*height 0.5s ease 0.5s;*/
-/*.content {*/
-/*color: #FFF;*/
-/*transition: color 0.5s ease 0.5s;*/
-/*}*/
