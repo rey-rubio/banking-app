@@ -216,68 +216,53 @@ router.post("/addBalance", (req, res) => {
 
 router.post("/addDocument", (req, res) => {
 
-    // Get user data and addBalance amount
+    // Get user data and document to be uploaded
     const userData = req.body.userData;
     const document = req.body.document;
-    console.log("Test addDocument from 1 users.js");
-    console.log(document);
 
     const {errors, isValid, newDocument} = validateDocument(document);
 
     if (!isValid) {
-        console.log("test addDocument INVALID")
         return res.status(400).json(errors);
     }
 
-    console.log("Test addDocument from 1.2 users.js");
-    console.log(newDocument);
+    User.findOneAndUpdate({_id: userData.user.id},
+                          {$push: {documents: newDocument}},
+                          function (err, success) {
 
-    console.log("BEFORE FIND ONE AND UPDATE:");
-    User.findOneAndUpdate({_id: userData.user.id}, {$push: {documents: newDocument}}, function (err, success) {
-
-        console.log("Test addDocument 2 users.js VALID")
         if (err) {
             console.log(err);
+            res.json({
+                success: false
+            });
         } else {
             console.log(success);
 
+            res.json({
+                success: true
+            });
         }
-
-    });
-    res.json({
-        success: true
     });
 });
 
 router.get("/getUserData/:userID", (req, res) => {
 
-
-    console.log("Test getUserData 1 users.js");
-    //const userData =  req;
-    // console.log(req);
-    // console.log(res);
     const userID = req.params.userID;
 
     console.log(userID);
     return User.findById({_id: userID})
         .then(function (balance, products, documents) {
 
-            console.log(" INSIDE FIND BY ID ");
-            console.log(balance);
-            console.log(products);
-            console.log(documents);
-            // return balance and products when resolved
-            res.send(balance);
-            res.send(products);
-            res.send(documents);
+            // send balance, products, and documents if available
+            if(balance) res.send(balance);
+            if(products) res.send(products);
+            if(documents) res.send(documents);
         })
         .catch(function (error) {
             // handle error
             console.log(error);
         })
 
-
-    console.log("Test getUserData 2 users.js");
 });
 
 

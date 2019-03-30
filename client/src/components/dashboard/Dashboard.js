@@ -34,6 +34,10 @@ class Dashboard extends Component {
         refreshUserDataButton.click();
     }
 
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     const refreshUserDataButton = document.getElementById("refreshButton");
+    //     refreshUserDataButton.click();
+    // }
 
     onAddBalanceChange = e => {
         this.setState({[e.currentTarget.id]: e.currentTarget.value});
@@ -86,9 +90,9 @@ class Dashboard extends Component {
 
         console.log("componentWillReceiveProps 1")
         console.log(nextProps);
-        if (nextProps.auth.loading === true) {
-            this.displayMessage("Welcome!");
-        }
+        // if (nextProps.auth.loading === true) {
+        //     //this.displayMessage("Welcome!");
+        // }
 
 
         if (nextProps.errors) {
@@ -129,7 +133,10 @@ class Dashboard extends Component {
 
             document.getElementById("productsTable").innerHTML = productsTable;
 
+            if (nextProps.auth.enrolling === true) {
+                this.displayMessage("Congratulations, you have been successfully enrolled!");
 
+            }
             //this.displayMessage("Congratulations! You have successfully enrolled!");
         }
 
@@ -155,10 +162,11 @@ class Dashboard extends Component {
 
             document.getElementById("documentsTable").innerHTML = documentsTable;
 
-            if (nextProps.auth.enrolling === true) {
-                this.displayMessage("Congratulations, you have been successfully enrolled!");
-            }
+
+
         }
+
+
         console.log("componentWillReceiveProps 2")
     }
 
@@ -408,7 +416,7 @@ class Dashboard extends Component {
                                                     borderRadius: "3px",
                                                     letterSpacing: "1.5px",
                                                     marginLeft: "1rem",
-                                                    marginBottom: "0.5rem"
+                                                    marginTop: "1rem"
                                                 }}
                                                 onClick={this.onAddDocumentClick.bind(this)}
                                                 className="btn btn-small waves-effect waves-light hoverable green accent-3"
@@ -506,13 +514,13 @@ class Dashboard extends Component {
                                 <div class="card">
                                     <h5 className="card-title">Savings</h5>
                                     <p>A simple savings account with low fees and an automatic savings program to help
-                                        your money grow.A simple savings account with low fees and an automatic savings
-                                        program to help
-                                        your money grow.A simple savings account with low fees and an automatic savings
-                                        program to help
                                         your money grow.</p>
+
                                     <h6>
-                                        Minimum Deposit Required: $250
+                                        Get started with a Savings account today!
+                                    </h6>
+                                    <h6>
+                                        <i>Minimum Deposit Required: $250</i>
                                     </h6>
                                     <div className="input-field col s12">
                                         <text
@@ -540,11 +548,15 @@ class Dashboard extends Component {
                                     <h5 className="card-title">Checking</h5>
                                     <p> A checking account is a bank account that allows easy access to your money.
                                         Also called a transactional account, it's the account that you will use to pay
-                                        your bills and make most of your financial transactions. Also called a
-                                        transactional account, it's the account that you will use to pay
-                                        your bills and make most of your financial transactions</p>
+                                        your bills and make most of your financial transactions. </p>
+
+
+
                                     <h6>
-                                        Minimum Deposit Required: $50
+                                        Get started with a Checking account today!
+                                    </h6>
+                                    <h6>
+                                        <i>Minimum Deposit Required: $50</i>
                                     </h6>
                                     <div className="input-field col s12">
                                         <text
@@ -581,7 +593,7 @@ class Dashboard extends Component {
                                         market account today!
                                     </h6>
                                     <h6>
-                                        Minimum Deposit Required: $50
+                                        <i>Minimum Deposit Required: $50</i>
                                     </h6>
                                     <div className="input-field col s12">
                                         <text
@@ -614,7 +626,7 @@ class Dashboard extends Component {
                                         Get started with a CD account today!
                                     </h6>
                                     <h6>
-                                        Minimum Deposit Required: $1000
+                                        <i>Minimum Deposit Required: $1000</i>
                                     </h6>
                                     <div className="input-field col s12">
                                         <text

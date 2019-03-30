@@ -1,4 +1,6 @@
-import {SET_CURRENT_USER, USER_LOADING, ENROLL, ADD_BALANCE, GET_USER_DATA, ADD_DOCUMENT} from "../actions/types";
+// authReducer.js
+import {SET_CURRENT_USER, USER_LOADING, ENROLL,
+    ADD_BALANCE, GET_USER_DATA, ADD_DOCUMENT} from "../actions/types";
 
 const isEmpty = require("is-empty");
 
@@ -14,10 +16,6 @@ const initialState = {
 
 export default function (state = initialState, action) {
 
-    console.log("Test 1 authReducer.js");
-    console.log(action);
-
-    console.log("Test 2 authReducer.js");
     switch (action.type) {
         case SET_CURRENT_USER:
             console.log("Test login from authReducer.js");
@@ -58,19 +56,16 @@ export default function (state = initialState, action) {
             };
 
         case GET_USER_DATA:
-            console.log("Test GET_USER_DATA from authReducer.js");
             return {
                 ...state,
-
-                loading: false,
                 balance: action.balance,
                 products: action.products,
                 documents: action.documents,
-                enrolling: false,
-                gettingUserData: true
+                gettingUserData: true,
             };
         default:
             return state;
     }
-
 }
+
+
